@@ -92,47 +92,34 @@ public class ShelfCreator {
         // outsideRectangleVolume = outsideRectangleLength * totalHeight * depth;
 
         totalHeight += woodHeight;
-        System.out.println("total height 2 = " + totalHeight);
-        System.out.println("depth = " + dim.D);
-        System.out.println("outsideRectangleLength = " + outsideRectangleLength);
+        /*
+         * System.out.println("total height 2 = " + totalHeight);
+         * System.out.println("depth = " + dim.D);
+         * System.out.println("outsideRectangleLength = " + outsideRectangleLength);
+         */
         outsideRectangleVolume = outsideRectangleLength * totalHeight * dim.D;
         for (int i = 0; i < numberOfShelves; i++) {
             insideRectangleVolume += dim.H[i] * dim.W * dim.D;
         }
-
-        System.out.println("outside Rectangle Volume =" + outsideRectangleVolume);
-        System.out.println("inside Rectangle Volume =" + insideRectangleVolume);
+        /*
+         * System.out.println("outside Rectangle Volume =" + outsideRectangleVolum
+         * System.out.println("inside Rectangle Volume =" + insideRectangleVolum
+         */
         return outsideRectangleVolume - insideRectangleVolume;
     }
 
     public static void main(String[] args) {
         ShelfCreator shelf = new ShelfCreator();
-        /*
-         * //test for 1 shelf
-         * float myThickness1 = 1.0f;
-         * float myDepth1 = 2.0f;
-         * float myHeights1[] = { 3.0f};
-         * 
-         * 
-         * 
-         * 
-         * //test for 2 shelfs
-         * float myThickness2 = 1.0f;
-         * float myDepth2 = 2.0f;
-         * float myHeights2[] = { 3.0f, 4.0f};
-         * at myWidth2 = 5.0f;
-         * float volume2 = shelf.findVolumeOfShelf(myThickness2,
-         * System.out.println("Volume of Shelf 2 = " + volume2);
-         */
-        Dimensions[] arrOfTestCases = shelf.getTestCases("/Users/aashu/work/calico2023/book_shelves/sample-1.1.in");
-        // args[1]);
+        Dimensions[] arrOfTestCases = shelf.getTestCases(args[0]);
         int i = 0;
-        System.out.println("*******************");
+        // System.out.println("*******************");
         for (Dimensions obj : arrOfTestCases) {
-            System.out.println(" Test Case " + i);
-            System.out.println(obj);
+            /*
+             * System.out.println(" Test Case " + i);
+             * System.out.println(obj);
+             */
             int volume = shelf.findVolumeOfShelf(obj);
-            System.out.println(" VOLUME OF SHELF = " + volume);
+            System.out.println(volume);
             i++;
         }
     }
