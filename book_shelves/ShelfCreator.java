@@ -3,14 +3,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class ShelfCreator {
-    class InputFormat {
+    class Dimensions {
         public int N;// num of shelves
         public int B;// thickness
         public int W;// width
         public int D;// depth
         public int H[];// heights
 
-        public InputFormat(int numberOfShelves,
+        public Dimensions(int numberOfShelves,
                 int thickness, int width, int depth) {
             N = numberOfShelves;
             B = thickness;
@@ -20,7 +20,7 @@ public class ShelfCreator {
         }
 
         public String toString() {
-            String str = "InputFormat:";
+            String str = "Dimensions:";
             str += " Num Shelves - " + N + "\n";
             str += " Thickness - " + B + "\n";
             str += " width - " + W + "\n";
@@ -36,18 +36,18 @@ public class ShelfCreator {
     /*
      * 
      * --------
-     * InputFormat ( ..... )
+     * Dimensions ( ..... )
      * ---------
-     * InputFormat ( ..... )
+     * Dimensions ( ..... )
      * ---------
      */
 
-    public InputFormat[] getTestCases(String inputFile) {
-        InputFormat arr[] = new InputFormat[0];
+    public Dimensions[] getTestCases(String inputFile) {
+        Dimensions arr[] = new Dimensions[0];
         try {
             List<String> allLines = Files.readAllLines(Paths.get(inputFile));
             int numTestCases = Integer.parseInt(allLines.get(0));
-            arr = new InputFormat[numTestCases];
+            arr = new Dimensions[numTestCases];
             int j = 0;
             int k = 0;
             String firstLine, secondLine;
@@ -56,7 +56,7 @@ public class ShelfCreator {
                 firstLine = allLines.get(i);
                 secondLine = allLines.get(i + 1);
                 arrOfStr = firstLine.split(" ");
-                arr[j] = new InputFormat(Integer.parseInt(arrOfStr[0]),
+                arr[j] = new Dimensions(Integer.parseInt(arrOfStr[0]),
                         Integer.parseInt(arrOfStr[1]),
                         Integer.parseInt(arrOfStr[2]),
                         Integer.parseInt(arrOfStr[3]));
@@ -75,27 +75,29 @@ public class ShelfCreator {
         return arr;
     }
 
-    public float findVolumeOfShelf(float thickness, float heights[], float width, float depth) {
-        float outsideRectangleLength = width + 2 * thickness;// outer box width
-        int numberOfShelves = heights.length;
-        float totalHeight = 0.0f;
-        float woodHeight = (numberOfShelves + 1) * thickness;// wood thickness for height
-        float insideRectangleVolume = 0.0f;
-        float outsideRectangleVolume = 0.0f;
+    public int findVolumeOfShelf(Dimensions dim) {
+        // int thickness, int heights[], int width, int depth
+
+        int outsideRectangleLength = dim.W + 2 * dim.B;// outer box width
+        int numberOfShelves = dim.H.length;
+        int totalHeight = 0;
+        int woodHeight = (numberOfShelves + 1) * dim.B;// wood thickness for height
+        int insideRectangleVolume = 0;
+        int outsideRectangleVolume = 0;
 
         for (int i = 0; i < numberOfShelves; i++) {
-            totalHeight += heights[i]; // adding heights together
+            totalHeight += dim.H[i]; // adding heights together
         }
         // System.out.println("total height 1 = " + totalHeight);
         // outsideRectangleVolume = outsideRectangleLength * totalHeight * depth;
 
         totalHeight += woodHeight;
         System.out.println("total height 2 = " + totalHeight);
-        System.out.println("depth = " + depth);
+        System.out.println("depth = " + dim.D);
         System.out.println("outsideRectangleLength = " + outsideRectangleLength);
-        outsideRectangleVolume = outsideRectangleLength * totalHeight * depth;
+        outsideRectangleVolume = outsideRectangleLength * totalHeight * dim.D;
         for (int i = 0; i < numberOfShelves; i++) {
-            insideRectangleVolume += heights[i] * width * depth;
+            insideRectangleVolume += dim.H[i] * dim.W * dim.D;
         }
 
         System.out.println("outside Rectangle Volume =" + outsideRectangleVolume);
@@ -122,12 +124,15 @@ public class ShelfCreator {
          * float volume2 = shelf.findVolumeOfShelf(myThickness2,
          * System.out.println("Volume of Shelf 2 = " + volume2);
          */
-        InputFormat[] arrOfTestCases = shelf.getTestCases("/Users/aashu/work/calico2023/book_shelves/sample-1.1.in");
-        //args[1]);
+        Dimensions[] arrOfTestCases = shelf.getTestCases("/Users/aashu/work/calico2023/book_shelves/sample-1.1.in");
+        // args[1]);
         int i = 0;
-        for (InputFormat obj : arrOfTestCases) {
+        System.out.println("*******************");
+        for (Dimensions obj : arrOfTestCases) {
             System.out.println(" Test Case " + i);
             System.out.println(obj);
+            int volume = shelf.findVolumeOfShelf(obj);
+            System.out.println(" VOLUME OF SHELF = " + volume);
             i++;
         }
     }
